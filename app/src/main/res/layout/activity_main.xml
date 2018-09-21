@@ -115,10 +115,10 @@
                         android:layout_height="16dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="8dp"
-                        android:background="@drawable/circle_dark_blue"
+                        android:background="@drawable/circle_light_blue"
                         android:gravity="center"
-                        android:text="載"
-                        android:textColor="#ffffff"
+                        android:text="手"
+                        android:textColor="#00aeef"
                         android:textSize="10sp" />
 
                     <TextView
