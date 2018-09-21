@@ -3,6 +3,7 @@ package ez.invoice.jason.themegenerator
 import android.graphics.Color
 import android.view.View
 import android.view.View.VISIBLE
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import org.junit.Test
@@ -130,6 +131,18 @@ class MainActivityTest {
         black = "0d111$"
         primaryBlackEdt.setText(black)
         assertEquals(expected, ShadowToast.getTextOfLatestToast())
+    }
+
+    @Test
+    fun clear_all_editText_when_clear_button_is_clicked() {
+        val expected = ""
+
+        mainActivity.findViewById<Button>(R.id.activity_main_clear_btn).performClick()
+
+        assertEquals(expected, primaryEdt.text.toString().trim())
+        assertEquals(expected, primaryLightEdt.text.toString().trim())
+        assertEquals(expected, primaryDarkEdt.text.toString().trim())
+        assertEquals(expected, primaryBlackEdt.text.toString().trim())
     }
 
 }
