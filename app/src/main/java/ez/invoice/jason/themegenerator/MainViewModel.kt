@@ -3,6 +3,7 @@ package ez.invoice.jason.themegenerator
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.graphics.Color
+import com.google.gson.Gson
 
 class MainViewModel : ViewModel() {
 
@@ -25,4 +26,9 @@ class MainViewModel : ViewModel() {
 
         return isValid
     }
+
+    fun createThemeJson(themePack: ThemePack) {
+        jsonString.value = Gson().toJson(themePack)
+    }
+
 }

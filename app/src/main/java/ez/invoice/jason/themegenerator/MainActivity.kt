@@ -139,8 +139,16 @@ class MainActivity : AppCompatActivity() {
             primaryColorDark.setText("")
             primaryBlack.setText("")
         }
+        saveBtn.setOnClickListener {
+            var themePack = ThemePack(
+                    primaryColor.text.toString().trim(),
+                    primaryColorLight.text.toString().trim(),
+                    primaryColorDark.text.toString().trim(),
+                    primaryBlack.text.toString().trim()
+            )
 
-
+            viewModel.createThemeJson(themePack)
+        }
     }
 
 }

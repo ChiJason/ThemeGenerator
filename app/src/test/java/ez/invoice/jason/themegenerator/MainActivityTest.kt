@@ -1,6 +1,5 @@
 package ez.invoice.jason.themegenerator
 
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.google.gson.Gson
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.Robolectric
@@ -156,10 +156,7 @@ class MainActivityTest {
         val primaryDarkColor = primaryDarkEdt.text.toString().trim()
         val primaryBlack = primaryBlackEdt.text.toString().trim()
 
-        val themeJson = "{ \"themeMedium\":\"$primaryColor\", " +
-                "\"themeLight\":\"$primaryLightColor\", " +
-                "\"themeDark\":\"$primaryDarkColor\", " +
-                "\"primaryBlack\":\"$primaryBlack\" }"
+        val themeJson = Gson().toJson(ThemePack(primaryColor, primaryLightColor, primaryDarkColor, primaryBlack))
 
         mainActivity.findViewById<Button>(R.id.activity_main_save_btn).performClick()
         assertEquals(themeJson, viewModel.getJsonString().value)
