@@ -11,11 +11,13 @@ import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import org.junit.Assert.*
 import org.junit.Before
+import org.robolectric.shadows.ShadowToast
 
 @RunWith(RobolectricTestRunner::class)
 class MainActivityTest {
 
     private lateinit var mainActivity: MainActivity
+    private lateinit var viewModel: MainViewModel
     private lateinit var primaryText: TextView
     private lateinit var primaryLightText: TextView
     private lateinit var primaryDarkText: TextView
@@ -24,6 +26,15 @@ class MainActivityTest {
     private lateinit var primaryLightEdt: EditText
     private lateinit var primaryDarkEdt: EditText
     private lateinit var primaryBlackEdt: EditText
+    private lateinit var invoiceNo: TextView
+    private lateinit var invoiceCircle: TextView
+    private lateinit var invoiceGotPrice: TextView
+    private lateinit var invoiceMoney: TextView
+
+    private var primary = "00aeef"
+    private var light = "d7f2fc"
+    private var dark = "007fbc"
+    private var black = "37474f"
 
     @Before
     fun setupTest() {
@@ -36,6 +47,10 @@ class MainActivityTest {
         primaryLightEdt = mainActivity.findViewById(R.id.activity_main_primary_color_light_edt)
         primaryDarkEdt = mainActivity.findViewById(R.id.activity_main_primary_color_dark_edt)
         primaryBlackEdt = mainActivity.findViewById(R.id.activity_main_primary_black_edt)
+        invoiceNo = mainActivity.findViewById(R.id.invoice_no)
+        invoiceCircle = mainActivity.findViewById(R.id.invoice_circle)
+        invoiceGotPrice = mainActivity.findViewById(R.id.invoice_got_prize)
+        invoiceMoney = mainActivity.findViewById(R.id.invoice_money)
     }
 
     @Test
@@ -47,37 +62,74 @@ class MainActivityTest {
     @Test
     fun start_view_with_default_theme_values() {
 
-        val primaryColor = primaryEdt.text.toString().trim()
-        assertEquals("00aeef", primaryColor)
+        val primaryColor = primaryText.currentTextColor
+        val primaryLightColor = primaryLightText.currentTextColor
+        val primaryDarkColor = primaryDarkText.currentTextColor
+        val primaryBlackColor = primaryBlackText.currentTextColor
+        val invoiceNoColor = invoiceNo.currentTextColor
+        val invoiceCircleTextColor = invoiceCircle.currentTextColor
+        val invoiceMoneyColor = invoiceMoney.currentTextColor
 
-        val primaryColorLight = primaryLightEdt.text.toString().trim()
-        assertEquals("d7f2fc", primaryColorLight)
+        assertEquals(Color.parseColor("#$primary"), primaryColor)
+        assertEquals(Color.parseColor("#$light"), primaryLightColor)
+        assertEquals(Color.parseColor("#$dark"), primaryDarkColor)
+        assertEquals(Color.parseColor("#$black"), primaryBlackColor)
+        assertEquals(Color.parseColor("#$black"), invoiceNoColor)
+        assertEquals(Color.parseColor("#$primary"), invoiceCircleTextColor)
+        assertEquals(Color.parseColor("#$dark"), invoiceMoneyColor)
 
-        val primaryColorDark = primaryDarkEdt.text.toString().trim()
-        assertEquals("d7f2fc", primaryColorDark)
-
-        val primaryBlack = primaryBlackEdt.text.toString().trim()
-        assertEquals("37474f", primaryBlack)
     }
 
     @Test
     fun textView_color_should_change_when_valid_colorHex_is_input() {
 
-        primaryEdt.setText("b5c7d5")
-        primaryLightEdt.setText("526b7a")
-        primaryDarkEdt.setText("293641")
-        primaryBlackEdt.setText("0d1114")
+        primary = "b5c7d5"
+        light = "526b7a"
+        dark = "293641"
+        black = "0d1114"
+
+        primaryEdt.setText(primary)
+        primaryLightEdt.setText(light)
+        primaryDarkEdt.setText(dark)
+        primaryBlackEdt.setText(black)
 
         val primaryColor = primaryText.currentTextColor
         val primaryLightColor = primaryLightText.currentTextColor
         val primaryDarkColor = primaryDarkText.currentTextColor
         val primaryBlackColor = primaryBlackText.currentTextColor
+        val invoiceNoColor = invoiceNo.currentTextColor
+        val invoiceCircleTextColor = invoiceCircle.currentTextColor
+        val invoiceMoneyColor = invoiceMoney.currentTextColor
 
-        assertEquals(Color.parseColor("#b5c7d5"), primaryColor)
-        assertEquals(Color.parseColor("#526b7a"), primaryLightColor)
-        assertEquals(Color.parseColor("#293641"), primaryDarkColor)
-        assertEquals(Color.parseColor("#0d1114"), primaryBlackColor)
+        assertEquals(Color.parseColor("#$primary"), primaryColor)
+        assertEquals(Color.parseColor("#$light"), primaryLightColor)
+        assertEquals(Color.parseColor("#$dark"), primaryDarkColor)
+        assertEquals(Color.parseColor("#$black"), primaryBlackColor)
+        assertEquals(Color.parseColor("#$black"), invoiceNoColor)
+        assertEquals(Color.parseColor("#$primary"), invoiceCircleTextColor)
+        assertEquals(Color.parseColor("#$dark"), invoiceMoneyColor)
+    }
 
+    @Test
+    fun show_toast_when_color_hex_is_not_valid() {
+
+        val expected = "color hex is invalid"
+
+        primary = "b5c7d$"
+        primaryEdt.setText(primary)
+        assertEquals(expected, ShadowToast.getTextOfLatestToast())
+
+        light = "526b7$"
+        primaryLightEdt.setText(light)
+        assertEquals(expected, ShadowToast.getTextOfLatestToast())
+
+        dark = "29364$"
+        primaryDarkEdt.setText(dark)
+        assertEquals(expected, ShadowToast.getTextOfLatestToast())
+
+        black = "0d111$"
+        primaryBlackEdt.setText(black)
+        assertEquals(expected, ShadowToast.getTextOfLatestToast())
     }
 
 }
