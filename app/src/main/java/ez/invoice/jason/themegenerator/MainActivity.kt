@@ -139,6 +139,8 @@ class MainActivity : AppCompatActivity() {
             primaryColorDark.setText("")
             primaryBlack.setText("")
         }
+
+
     }
 
 }

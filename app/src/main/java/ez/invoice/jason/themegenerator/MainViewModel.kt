@@ -7,6 +7,11 @@ import android.graphics.Color
 class MainViewModel : ViewModel() {
 
     private val colorHexAvailable = MutableLiveData<Boolean>()
+    private val jsonString = MutableLiveData<String>()
+
+    fun getJsonString(): MutableLiveData<String> {
+        return jsonString
+    }
 
     fun checkColorHex(textColor: String): Boolean{
         var isValid = true

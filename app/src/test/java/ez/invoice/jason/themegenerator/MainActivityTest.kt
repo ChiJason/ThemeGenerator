@@ -1,5 +1,7 @@
 package ez.invoice.jason.themegenerator
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.view.View
 import android.view.View.VISIBLE
@@ -40,6 +42,7 @@ class MainActivityTest {
     @Before
     fun setupTest() {
         mainActivity = Robolectric.buildActivity(MainActivity::class.java).create().get()
+        viewModel = ViewModelProviders.of(mainActivity).get(MainViewModel::class.java)
         primaryText = mainActivity.findViewById(R.id.activity_main_primary_color)
         primaryLightText = mainActivity.findViewById(R.id.activity_main_primary_color_light)
         primaryDarkText = mainActivity.findViewById(R.id.activity_main_primary_color_dark)
@@ -143,6 +146,23 @@ class MainActivityTest {
         assertEquals(expected, primaryLightEdt.text.toString().trim())
         assertEquals(expected, primaryDarkEdt.text.toString().trim())
         assertEquals(expected, primaryBlackEdt.text.toString().trim())
+    }
+
+    @Test
+    fun create_theme_json_file_when_save_button_is_clicked() {
+
+        val primaryColor = primaryEdt.text.toString().trim()
+        val primaryLightColor = primaryLightEdt.text.toString().trim()
+        val primaryDarkColor = primaryDarkEdt.text.toString().trim()
+        val primaryBlack = primaryBlackEdt.text.toString().trim()
+
+        val themeJson = "{ \"themeMedium\":\"$primaryColor\", " +
+                "\"themeLight\":\"$primaryLightColor\", " +
+                "\"themeDark\":\"$primaryDarkColor\", " +
+                "\"primaryBlack\":\"$primaryBlack\" }"
+
+        mainActivity.findViewById<Button>(R.id.activity_main_save_btn).performClick()
+        assertEquals(themeJson, viewModel.getJsonString().value)
     }
 
 }
