@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private val invoiceNo by lazy { invoice_no }
     private val invoiceCircle by lazy { invoice_circle }
     private val invoiceMoney by lazy { invoice_money }
+    private val clearBtn by lazy { activity_main_clear_btn }
+    private val saveBtn by lazy { activity_main_save_btn }
     private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -131,7 +133,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
+        clearBtn.setOnClickListener {
+            primaryColor.setText("")
+            primaryColorLight.setText("")
+            primaryColorDark.setText("")
+            primaryBlack.setText("")
+        }
     }
 
 }
