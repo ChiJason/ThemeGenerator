@@ -1,5 +1,6 @@
 package ez.invoice.jason.themegenerator
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.DisplayCutout
+import android.view.WindowManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -34,13 +37,15 @@ class MainActivity : AppCompatActivity() {
         setupViewModel()
         setupView()
         setupListener()
+
+
     }
 
     private fun setupViewModel() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-//        viewModel.getColorHexAvailable().observe(this, Observer {
-//            available -> if (available == false) Toast.makeText(this, "color hex not valid", Toast.LENGTH_SHORT).show()
-//        })
+        viewModel.getColorHexAvailable().observe(this, Observer { available ->
+            if (available == false) Toast.makeText(this, "color hex not valid", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun setupView() {

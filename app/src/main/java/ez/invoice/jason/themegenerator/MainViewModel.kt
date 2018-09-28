@@ -10,6 +10,10 @@ class MainViewModel : ViewModel() {
     private val colorHexAvailable = MutableLiveData<Boolean>()
     private val jsonString = MutableLiveData<String>()
 
+    fun getColorHexAvailable(): MutableLiveData<Boolean> {
+        return colorHexAvailable
+    }
+
     fun getJsonString(): MutableLiveData<String> {
         return jsonString
     }
